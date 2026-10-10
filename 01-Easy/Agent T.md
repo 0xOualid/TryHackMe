@@ -6,6 +6,8 @@
 
 ## Solution
 
+First reconnaissance and port scanning.
+
 ```shell
 nmap -sV -sC -Pn --open 10.128.147.124 -p-
 ```
@@ -19,7 +21,7 @@ We can see one only port is open 80 (HTTP).
 So let's browse the IP and check.
 But there is nothing no interactive pages no subdirectories and nothing interesting.
 
-So in this case we can check the last thing which is if there is some vulnerabilities on the server.
+So in this case we can check the last thing, which is if there is some vulnerabilities on the server.
 
 ```shell
 searchsploit PHP 8.1.0-dev

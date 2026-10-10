@@ -6,6 +6,8 @@
 
 ## Solution
 
+First reconnaissance and port scanning.
+
 ```shell
 nmap -sV -sC -Pn --open 10.130.191.52 -p-
 ```
@@ -58,6 +60,8 @@ cd notread
 ```shell
 mget *
 ```
+
+Then in our machine.
 
 ```shell
 file *
