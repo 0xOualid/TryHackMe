@@ -30,7 +30,7 @@ The goal of this repository is simple:
 │   │
 │   └── Windows/
 │       ├── Flatline.md
-│       └──...
+│       └── ...
 │
 ├── 02-Medium/
 │
