@@ -1,7 +1,5 @@
 # Pickle Rick Writeup
 
-> Machine : Linux
-
 > A Rick and Morty CTF. Help turn Rick back into a human!
 
 ## Solution

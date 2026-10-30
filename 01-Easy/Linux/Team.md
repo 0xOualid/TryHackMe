@@ -1,7 +1,5 @@
 # Team Writeup
 
-> Machine : Linux
-
 > Beginner friendly boot2root machine
 
 ## Solution

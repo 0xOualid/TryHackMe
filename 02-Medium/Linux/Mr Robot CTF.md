@@ -1,7 +1,5 @@
 # Mr Robot CTF Writeup
 
-> Machine : Linux
-
 > Can you root this Mr. Robot styled machine? This is a lab machine meant for beginners/intermediate users. There are 3 hidden keys located on the machine, can you find them?
 
 ## Solution

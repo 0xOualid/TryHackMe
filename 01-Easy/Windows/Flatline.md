@@ -1,7 +1,5 @@
 # Flatline Writeup
 
-> Machine : Windows
-
 > How low are your morals?
 
 ## Solution

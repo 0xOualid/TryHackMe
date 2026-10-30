@@ -1,7 +1,5 @@
 # Wgel CTF Writeup
 
-> Machine : Linux
-
 > Can you exfiltrate the root flag?
 
 ## Solution

@@ -1,7 +1,5 @@
 # Agent T Writeup
 
-> Machine : Linux
-
 > Something seems a little off with the server.
 
 ## Solution

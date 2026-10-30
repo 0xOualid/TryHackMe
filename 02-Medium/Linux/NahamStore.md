@@ -1,7 +1,5 @@
 # NahamStore Writeup
 
-> Machine : Linux
-
 > In this room you will learn the basics of bug bounty hunting and web application hacking
 
 ## Solution

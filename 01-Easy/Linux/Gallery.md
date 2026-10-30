@@ -1,7 +1,5 @@
 # Gallery Writeup
 
-> Machine : Linux
-
 > Try to exploit our image gallery system
 
 ## Solution

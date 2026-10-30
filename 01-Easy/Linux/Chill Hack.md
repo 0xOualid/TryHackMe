@@ -1,7 +1,5 @@
 # Chill Hack Writeup
 
-> Machine : Linux
-
 > Easy level CTF.  Capture the flags and have fun!
 
 ## Solution

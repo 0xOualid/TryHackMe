@@ -1,7 +1,5 @@
 # RootMe Writeup
 
-> Machine : Linux
-
 > A ctf for beginners, can you root me?
 
 ## Solution

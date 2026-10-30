@@ -21,11 +21,16 @@ The goal of this repository is simple:
 ```text
 .
 ├── 01-Easy/
-│   ├── Basic Pentesting.md
-│   ├── Pickle Rick.md
-│   ├── RootMe.md
-│   ├── Simple CTF.md
-│   └── ...
+│   └── Linux/
+│   │   ├── Basic Pentesting.md
+│   │   ├── Pickle Rick.md
+│   │   ├── RootMe.md
+│   │   ├── Simple CTF.md
+│   │   └── ...
+│   │
+│   └── Windows/
+│       ├── Flatline.md
+│       └──...
 │
 ├── 02-Medium/
 │

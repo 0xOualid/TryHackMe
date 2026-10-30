@@ -1,7 +1,5 @@
 # Anonforce Writeup
 
-> Machine : Linux
-
 > boot2root machine for FIT and bsides guatemala CTF
 
 ## Solution

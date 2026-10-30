@@ -1,7 +1,5 @@
 # Brute It Writeup
 
-> Machine : Linux
-
 > Learn how to brute, hash cracking and escalate privileges in this box!
 
 ## Solution

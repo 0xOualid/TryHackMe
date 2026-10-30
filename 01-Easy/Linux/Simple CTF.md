@@ -1,7 +1,5 @@
 # Simple CTF Writeup
 
-> Machine : Linux
-
 > Beginner level ctf
 
 ## Solution

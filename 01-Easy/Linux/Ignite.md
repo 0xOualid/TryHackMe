@@ -1,7 +1,5 @@
 # Ignite Writeup
 
-> Machine : Linux
-
 > A new start-up has a few issues with their web server.
 
 ## Solution

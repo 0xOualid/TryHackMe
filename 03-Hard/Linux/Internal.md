@@ -1,7 +1,5 @@
 # Internal Writeup
 
-> Machine : Linux
-
 > Having accepted the project, you are provided with the client assessment environment.  Secure the User and Root flags and submit them to the dashboard as proof of exploitation.
 
 ## Solution
