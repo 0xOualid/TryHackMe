@@ -7,24 +7,13 @@
 First we have to add the IP to the `hosts` file.
 
 ```shell
-nano /etc/hosts
-```
-
-```text
-127.0.0.1       localhost
-127.0.1.1       kali
-10.129.143.130  internal.thm
-
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+echo "10.129.143.130    internal.thm" | tee -a /etc/hosts
 ```
 
 Then reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn --open internal.thm -p-
+nmap -sV -sC -Pn -p- internal.thm
 ```
 
 ```text

@@ -7,7 +7,7 @@
 First reconnaissance, port scanning and setup the requirement.
 
 ```shell
-nmap -sV -sC -Pn --open -T4 nahamstore.thm -p-
+nmap -sV -sC -Pn -T4 -p- nahamstore.thm
 ```
 
 ```text
@@ -468,7 +468,7 @@ ff02::2 ip6-allrouters
 10.131.104.72   internal-api.nahamstore.thm
 ```
 
-This is it there is two new subdomains `nahamstore-2020.nahamstore.thm` and `nahamstore-2020-dev.nahamstore.thm`.
+This is it, there is two new subdomains `nahamstore-2020.nahamstore.thm` and `nahamstore-2020-dev.nahamstore.thm`.
 
 After adding them to our `/etc/hosts` file, and enumerate them if there is any hiding directories and parameters using `gobuster and arjun`.
 We found: http://nahamstore-2020-dev.nahamstore.thm/api/customers/?customer_id=2

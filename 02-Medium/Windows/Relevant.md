@@ -7,7 +7,7 @@
 First reconnaissance and port scanning.
 
 ```shell
-nmap -Pn -T4 --min-rate 3000 10.129.184.206 -p- -oN scan.txt
+nmap -Pn -T4 --min-rate 3000 -p- 10.129.184.206 -oN scan.txt
 ```
 
 ```text
@@ -31,7 +31,7 @@ cat scan.txt | grep '^[0-9].*open' | cut -d '/' -f1 | paste -sd ',' '-'
 ```
 
 ```shell
-nmap -Pn -T4 -sV -sC 10.129.184.206 -p 80,135,139,445,3389,49663,49666,49667
+nmap -Pn -T4 -sV -sC -p 80,135,139,445,3389,49663,49666,49667 10.129.184.206
 ```
 
 ```text

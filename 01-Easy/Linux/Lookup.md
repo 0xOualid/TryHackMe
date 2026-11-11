@@ -7,7 +7,7 @@
 First reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn --open 10.128.149.92 -p-
+nmap -sV -sC -Pn -p- 10.128.149.92
 ```
 
 From our result we found only two open ports 22 (SSH) and 80 (HTTP).
@@ -16,18 +16,7 @@ We know SSH  is hard to break so let's focus on HTTP.
 We try entering the IP address into our browser, but the site redirects us to the domain `lookup.thm`. So we have to add it in our hosts file to access it.
 
 ```shell
-nano /etc/hosts
-```
-
-```text
-127.0.0.1       localhost
-127.0.1.1       kali
-10.128.149.92   lookup.thm
-
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+echo "10.128.149.92    lookup.thm" | tee -a /etc/hosts
 ```
 
 Now, upon reaching `lookup.thm`, a login page appears. And we notice from the error message that there is a user `admin`. So we try brute force the admin password.

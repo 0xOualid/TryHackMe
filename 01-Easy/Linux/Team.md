@@ -13,7 +13,7 @@ First connect to the machine.
 Then reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn --open 10.130.172.107 -p-
+nmap -sV -sC -Pn -p- 10.130.172.107
 ```
 
 From our result we can see there is three open ports 21 (FTP), 22 (SSH) and 80 (HTTP).
@@ -28,18 +28,7 @@ It works! If you see this add 'team.thm' to your hosts!</title>
 This means we have to add `team.thm` in our `/etc/hosts` file.
 
 ```shell
-nano /etc/hosts
-```
-
-```text
-127.0.0.1       localhost
-127.0.1.1       kali
-10.130.172.107  team.thm
-
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+echo "10.130.172.107    team.thm" | tee -a /etc/hosts
 ```
 
 Now let's find the directories in this domain using `gobuster`.

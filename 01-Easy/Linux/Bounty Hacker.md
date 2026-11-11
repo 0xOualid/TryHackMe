@@ -13,7 +13,7 @@ First we connect to the machine.
 Then reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn --open 10.129.156.103 -p-
+nmap -sV -sC -Pn -p- 10.129.156.103
 ```
 
 From our results, we can see ports 21 (FTP), 22 (SSH) and 80 (HTTP) are open.
