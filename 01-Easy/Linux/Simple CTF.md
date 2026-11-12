@@ -7,7 +7,7 @@
 First thing is reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 10.128.134.213
+nmap -sV -sC -Pn -T4 -p- 10.128.134.213
 ```
 
 From our results, we can see ports 21 (FTP), 80 (HTTP), and 2222 (SSH) are open.

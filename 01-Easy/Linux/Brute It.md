@@ -13,7 +13,7 @@ First connect to the machine.
 Then reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 10.129.128.249
+nmap -sV -sC -Pn -T4 -p- 10.129.128.249
 ```
 
 ```text

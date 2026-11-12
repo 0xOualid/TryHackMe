@@ -7,7 +7,7 @@
 First reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 10.128.158.26
+nmap -sV -sC -Pn -T4 -p- 10.128.158.26
 ```
 
 From our results, we can see ports 21 (FTP), 22 (SSH) and 80 (HTTP) are open. And `anonymous` login was allowed. 

@@ -7,7 +7,7 @@
 First reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 10.128.149.92
+nmap -sV -sC -Pn -T4 -p- 10.128.149.92
 ```
 
 From our result we found only two open ports 22 (SSH) and 80 (HTTP).

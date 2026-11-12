@@ -7,7 +7,7 @@
 First reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 192.168.176.170
+nmap -sV -sC -Pn -T4 -p- 192.168.176.170
 ```
 
 From our results, we can see port 80 (HTTP) are open. And there is a `robots.txt` file, and on it is a `/fuel` hidden directory on it.

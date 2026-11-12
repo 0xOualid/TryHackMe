@@ -13,7 +13,7 @@ echo "10.129.143.130    internal.thm" | tee -a /etc/hosts
 Then reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- internal.thm
+nmap -sV -sC -Pn -T4 -p- internal.thm
 ```
 
 ```text

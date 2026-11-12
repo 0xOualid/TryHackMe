@@ -9,7 +9,7 @@ I don't know how `TryHackMe` dared to say that this room is easy. But it's ok yo
 Let's start with reconnaissance and port scanning.
 
 ```shell
-nmap -sV -sC -Pn -p- 10.130.139.103
+nmap -sV -sC -Pn -T4 -p- 10.130.139.103
 ```
 
 From our results, we can see ports 21 (FTP), 22 (SSH) and 80 (HTTP) are open. And `anonymous` login was allowed. 

@@ -17,7 +17,7 @@ PORT     STATE SERVICE
 ```
 
 ```shell
-nmap -sV -sC -Pn -T4 -p 3389,8021 10.130.177.93
+nmap -sV -sC -Pn -T4 -p3389,8021 10.130.177.93
 ```
 
 ```text
