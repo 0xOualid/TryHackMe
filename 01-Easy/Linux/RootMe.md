@@ -1,8 +1,10 @@
-# RootMe Writeup
+## RootMe
 
-> A ctf for beginners, can you root me?
+A ctf for beginners, can you root me?
 
-## Solution
+---
+
+## Notes
 
 First let's connect to the machine.
 

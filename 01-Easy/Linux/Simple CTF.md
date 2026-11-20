@@ -1,8 +1,10 @@
-# Simple CTF Writeup
+## Simple CTF
 
-> Beginner level ctf
+Beginner level ctf
 
-## Solution
+---
+
+## Notes
 
 First thing is reconnaissance and port scanning.
 

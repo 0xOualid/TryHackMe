@@ -1,8 +1,10 @@
-# Chill Hack Writeup
+## Chill Hack
 
-> Easy level CTF.  Capture the flags and have fun!
+Easy level CTF.  Capture the flags and have fun!
 
-## Solution
+---
+
+## Notes
 
 I don't know how `TryHackMe` dared to say that this room is easy. But it's ok you have to chill when you hack this.
 

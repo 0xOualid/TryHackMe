@@ -1,8 +1,10 @@
-# GamingServer Writeup
+## GamingServer
 
-> Can you gain access to this gaming server built by amateurs with no experience of web development and take advantage of the deployment system.
+Can you gain access to this gaming server built by amateurs with no experience of web development and take advantage of the deployment system.
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

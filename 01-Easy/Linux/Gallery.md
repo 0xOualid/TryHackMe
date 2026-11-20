@@ -1,8 +1,10 @@
-# Gallery Writeup
+## Gallery
 
-> Try to exploit our image gallery system
+Try to exploit our image gallery system
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

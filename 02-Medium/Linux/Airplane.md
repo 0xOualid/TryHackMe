@@ -1,8 +1,10 @@
-# Airplane Writeup
+## Airplane
 
-> Are you ready to fly?
+Are you ready to fly?
 
-## Solution
+---
+
+## Notes
 
 First let's add the IP to the hosts file.
 

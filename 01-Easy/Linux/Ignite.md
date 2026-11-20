@@ -1,8 +1,10 @@
-# Ignite Writeup
+## Ignite
 
-> A new start-up has a few issues with their web server.
+A new start-up has a few issues with their web server.
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

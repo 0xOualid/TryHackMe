@@ -1,8 +1,10 @@
-# Relevant Writeup
+## Relevant
 
-> You have been assigned to a client that wants a penetration test conducted on an environment due to be released to production in seven days. 
+You have been assigned to a client that wants a penetration test conducted on an environment due to be released to production in seven days.
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

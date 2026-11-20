@@ -1,8 +1,10 @@
-# Team Writeup
+## Team
 
-> Beginner friendly boot2root machine
+Beginner friendly boot2root machine
 
-## Solution
+---
+
+## Notes
 
 First connect to the machine.
 

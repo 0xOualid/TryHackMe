@@ -1,8 +1,10 @@
-# Flatline Writeup
+## Flatline
 
-> How low are your morals?
+How low are your morals?
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

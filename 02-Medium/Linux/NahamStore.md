@@ -1,8 +1,10 @@
-# NahamStore Writeup
+## NahamStore
 
-> In this room you will learn the basics of bug bounty hunting and web application hacking
+In this room you will learn the basics of bug bounty hunting and web application hacking
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance, port scanning and setup the requirement.
 

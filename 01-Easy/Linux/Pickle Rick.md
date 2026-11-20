@@ -1,8 +1,10 @@
-# Pickle Rick Writeup
+## Pickle Rick
 
-> A Rick and Morty CTF. Help turn Rick back into a human!
+A Rick and Morty CTF. Help turn Rick back into a human!
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

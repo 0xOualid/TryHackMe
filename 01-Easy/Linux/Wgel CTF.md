@@ -1,8 +1,10 @@
-# Wgel CTF Writeup
+## Wgel CTF
 
-> Can you exfiltrate the root flag?
+Can you exfiltrate the root flag?
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

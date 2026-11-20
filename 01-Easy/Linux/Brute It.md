@@ -1,8 +1,10 @@
-# Brute It Writeup
+## Brute It
 
-> Learn how to brute, hash cracking and escalate privileges in this box!
+Learn how to brute, hash cracking and escalate privileges in this box!
 
-## Solution
+---
+
+## Notes
 
 First connect to the machine.
 
