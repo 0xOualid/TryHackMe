@@ -1,8 +1,10 @@
-# Agent T Writeup
+## Agent T
 
-> Something seems a little off with the server.
+Something seems a little off with the server.
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 

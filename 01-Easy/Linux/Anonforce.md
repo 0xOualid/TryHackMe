@@ -1,8 +1,10 @@
-# Anonforce Writeup
+## Anonforce
 
-> boot2root machine for FIT and bsides guatemala CTF
+boot2root machine for FIT and bsides guatemala CTF
 
-## Solution
+---
+
+## Notes
 
 First reconnaissance and port scanning.
 
