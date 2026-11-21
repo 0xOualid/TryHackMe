@@ -1,6 +1,6 @@
-# TryHackMe Writeups
+# TryHackMe Notes
 
-Welcome to my TryHackMe writeups repository!
+Welcome to my TryHackMe repository!
 
 This repository contains my personal notes, solutions, and learning journey while solving rooms and challenges on TryHackMe.
 
@@ -12,7 +12,7 @@ The goal of this repository is simple:
 - Document techniques and methodologies
 - Build a consistent cybersecurity learning habit
 
-> These writeups are mainly written for myself, so explanations are kept simple, practical, and focused on what I learn from each challenge.
+> These notes are mainly written for myself, so explanations are kept simple, practical, and focused on what I learn from each challenge.
 
 ---
 
@@ -43,7 +43,7 @@ The goal of this repository is simple:
 
 Each room or challenge is organized according to its TryHackMe difficulty level.
 
-Writeups may include the following sections:
+Notes may include the following sections:
 
 - Challenge overview
 - Reconnaissance
@@ -103,7 +103,7 @@ The purpose is not only to collect solutions, but also to document the process a
 
 All content in this repository is for educational purposes only.
 
-These writeups are based on legal cybersecurity training environments and CTF challenges provided by TryHackMe.
+These notes are based on legal cybersecurity training environments and CTF challenges provided by TryHackMe.
 
 Do not use the techniques, commands, scripts, or information documented in this repository against systems that you do not own or have explicit permission to test.
 
