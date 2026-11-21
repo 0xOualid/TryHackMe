@@ -1,4 +1,4 @@
-# TryHackMe Notes
+# TryHackMe Personal Notes
 
 Welcome to my TryHackMe repository!
 
