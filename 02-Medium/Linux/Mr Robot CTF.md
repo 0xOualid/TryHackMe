@@ -35,7 +35,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 From our results, we can see ports 22 (SSH), 80 (HTTP) and 443 (HTTPS) are open.
 
 There is nothing can help us on `http://10.129.154.236/`.
-So let's use `gobuster` to find the if there is some hidden directories.
+So let's use `gobuster` to find if there is any hidden directories.
 
 ```shell
 gobuster dir -u http://10.129.154.236/ -w /usr/share/wordlists/dirb/common.txt
@@ -57,7 +57,7 @@ fsocity.dic
 key-1-of-3.txt
 ```
 
-`fsocity.dic` which is a word list of passwords. And `key-1-of-3.txt` and This is the first key.
+`fsocity.dic` which is a word list of passwords. And `key-1-of-3.txt` is the first key.
 
 ```shell
 curl http://10.129.154.236/key-1-of-3.txt
@@ -74,7 +74,7 @@ curl http://10.129.154.236/key-1-of-3.txt
 Then let's see what's in `http://10.129.154.236/wp-admin/`.
 We found a WordPress login page, which is probably the port to enter. But we have no credentials.
 
-We don't find nothing so let's go to the third interesting directory  `/license`.
+We found nothing so let's go to the third interesting directory `/license`.
 That's it we found a base64 text `ZWxsaW90OkVSMjgtMDY1Mgo=`.
 
 ```shell
